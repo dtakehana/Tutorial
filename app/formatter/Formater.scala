@@ -1,6 +1,5 @@
 package formatter
 
-//TODO modelsにModelクラス作って中にcase class作ったが見れなかった・・・インナークラスってどうやってインポートするの？またはpublicつけないとだめだっけ？
 import models._
 
 import play.api.libs.functional.syntax._
