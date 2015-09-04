@@ -17,5 +17,4 @@ object Formatter {
   implicit val json2Person: Format[Person] = (
     (__ \ "age").format[Int] and (__ \ "name").format[Name]
     )(Person.apply _, unlift(Person.unapply))
-
 }
