@@ -26,7 +26,6 @@ class PersonService extends Controller {
     //      }
     //    )
 
-
     Json.fromJson[Person](rs.body) match {
       case person: JsSuccess[Person] => {
         Logger.info("OK")
