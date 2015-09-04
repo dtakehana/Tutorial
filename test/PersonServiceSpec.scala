@@ -24,8 +24,10 @@ class PersonServiceSpec extends Specification {
         FakeHeaders(Seq(CONTENT_TYPE -> "application/json")),
         Json.parse( """{"typo1!!!":24, "name":{"first":"FirstName", "typo2!!!":"LastName"}}""")))
       status(result) mustEqual BAD_REQUEST
+      //verupでメッセージ構成変わったかも・・・
       contentAsString(result) mustEqual
-        """ {"person.age":[{"msg":"error.path.missing"}],"person.name.last":[{"msg":"error.path.missing"}]}"""
+         """{"obj.age":[{"msg":["error.path.missing"],"args":[]}],"obj.name.last":[{"msg":["error.path.missing"],"args":[]}]}"""
+        ///""" {"person.age":[{"msg":"error.path.missing"}],"person.name.last":[{"msg":"error.path.missing"}]}"""
     }
   }
 
