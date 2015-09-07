@@ -15,17 +15,6 @@ class PersonService extends Controller {
 
     Logger.info(rs.body.toString())
 
-    //    val r = rs.body.validate[Person]
-    //    r.fold(
-    //      errors => {
-    //        BadRequest(Json.obj("status" ->"KO", "message" -> JsError.toFlatJson(errors)))
-    //      },
-    //      person => {
-    //        //Place.save(place)
-    //        Ok(Json.obj("status" ->"OK", "message" -> ("Place '"+person.name+"' saved.") ))
-    //      }
-    //    )
-
     Json.fromJson[Person](rs.body) match {
       case person: JsSuccess[Person] => {
         Logger.info("OK")
@@ -49,11 +38,24 @@ class PersonService extends Controller {
     //      }
     //    }
 
-    //    rs.body.validate[Person].map { p =>
-    //      //register
-    //      Ok(Json.toJson(p))
-    //    }.recoverTotal { e =>
-    //      BadRequest(JsError.toFlatJson(e))
-    //    }
+    //        //playサンプルver
+    //        val r = rs.body.validate[Person]
+    //        r.fold(
+    //          errors => {
+    //            BadRequest(Json.obj("status" ->"KO", "message" -> JsError.toFlatJson(errors)))
+    //          },
+    //          person => {
+    //            //Place.save(place)
+    //            Ok(Json.obj("status" ->"OK", "message" -> ("Place '"+person.name+"' saved.") ))
+    //          }
+    //        )
+
+    //        //正解ver
+    //        rs.body.validate[Person].map { p =>
+    //          //register
+    //          Ok(Json.toJson(p))
+    //        }.recoverTotal { e =>
+    //          BadRequest(JsError.toFlatJson(e))
+    //        }
   }
 }

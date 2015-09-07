@@ -1,6 +1,5 @@
 package formatter
 
-//TODO modelsにModelクラス作って中にcase class作ったが見れなかった・・・インナークラスってどうやってインポートするの？またはpublicつけないとだめだっけ？
 import models._
 
 import play.api.libs.functional.syntax._
@@ -18,5 +17,4 @@ object Formatter {
   implicit val json2Person: Format[Person] = (
     (__ \ "age").format[Int] and (__ \ "name").format[Name]
     )(Person.apply _, unlift(Person.unapply))
-
 }
