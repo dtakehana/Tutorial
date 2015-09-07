@@ -6,10 +6,14 @@ import play.api.mvc._
 
 import play.api.Logger
 
+import play.api.i18n.{MessagesApi, I18nSupport}
+import javax.inject.Inject
+
 /**
  * Created by d-takehana on 2015/09/04.
  */
-class PersonService extends Controller {
+class PersonService @Inject()(val messagesApi: MessagesApi) extends Controller with I18nSupport{
+//class PersonService extends Controller {
   def savePerson = Action(BodyParsers.parse.json) { rs =>
     import formatter.Formatter._
 
@@ -18,11 +22,11 @@ class PersonService extends Controller {
     Json.fromJson[Person](rs.body) match {
       case person: JsSuccess[Person] => {
         Logger.info("OK")
-        Ok(Json.toJson(person.get))
+        Ok(Json.toJson(person.get)).withHeaders("Access-Control-Allow-Origin" -> " *")
       }
       case e: JsError => {
         Logger.info("NG")
-        BadRequest(JsError.toJson(e))
+        BadRequest(Json.obj("status" ->"NG", "message" -> JsError.toJson(e))).withHeaders("Access-Control-Allow-Origin" -> " *")
       }
     }
 
