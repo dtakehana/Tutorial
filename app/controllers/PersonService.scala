@@ -22,11 +22,11 @@ class PersonService @Inject()(val messagesApi: MessagesApi) extends Controller w
     Json.fromJson[Person](rs.body) match {
       case person: JsSuccess[Person] => {
         Logger.info("OK")
-        Ok(Json.toJson(person.get)).withHeaders("Access-Control-Allow-Origin" -> " *")
+        Ok(Json.toJson(person.get))
       }
       case e: JsError => {
         Logger.info("NG")
-        BadRequest(Json.obj("status" ->"NG", "message" -> JsError.toJson(e))).withHeaders("Access-Control-Allow-Origin" -> " *")
+        BadRequest(Json.obj("status" ->"NG", "message" -> JsError.toJson(e)))
       }
     }
 
