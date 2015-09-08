@@ -9,4 +9,5 @@ GET         /                          @controllers.Application.index
 GET         /assets/*file              @controllers.Assets.versioned(path="/public", file: Asset)
 
 POST        /service/saveperson        @controllers.PersonService.savePerson
-GET         /service/getperson         @controllers.PersonService.getPerson
+GET         /service/gettest         @controllers.PersonService.getFutureTest
+GET         /service/getperson         @controllers.FutureService.getPerson

@@ -18,33 +18,23 @@ class PersonService @Inject()(val messagesApi: MessagesApi) extends Controller w
   //class PersonService extends Controller {
   import formatter.Formatter._
 
-  def getPerson = Action { rs =>
+  def getFutureTest = Action{ rs =>
     import scala.concurrent._
     import ExecutionContext.Implicits.global
     import scala.util.{Success, Failure}
 
-    val person: Future[Option[Person]] = Future {
-      Some(Person(24, Name("first","last"), Some("O"), Seq(1,2,3)))
+    val f1: Future[Seq[Int]] = Future {
+      for (i <- 1 to 9) yield i
     }
-    val cart: Future[Option[Cart]] = Future {
-      Some(Cart(99L, "iphone"))
+    val f2: Future[Seq[Int]] = Future {
+      for (i <- 10 to 10) yield i
     }
-    //personに紐づくカート明細
-    val f = for {Some(p) <- person; Some(c) <- cart} yield PersonCarts(p, Seq(c))
-    //同期？？
-//    f.onSuccess {
-//      case _ =>
-//    }
-    Ok(Json.toJson(Await.result(f, scala.concurrent.duration.Duration(1000, TimeUnit.MILLISECONDS))))
-    //Ok(Json.toJson(f.value.getOrElse("""{"status":"NG"}""")))
-//    val f: Future[Seq[Int]] = Future {
-//      for (i <- 1 to 10 if i == 9) yield i
-//    }
-//    f onComplete {
-//      case Success(list) => for (num <- list) Logger.info(num.toString)
-//      case Failure(t) => println("An error has occured: " + t.getMessage)
-//    }
-//    Ok(Json.toJson( """{"status":"OK"}"""))
+    val xf = for (i <- f1; ii <- f2) yield (i, ii)
+    xf onComplete {
+      case Success(tpl) => for (i <- tpl._1; ii <- tpl._2) Logger.info(i + " " + ii)
+      case Failure(t) => println("An error has occured: " + t.getMessage)
+    }
+    Ok(Json.toJson( """{"status":"OK"}"""))
   }
 
   def savePerson = Action(BodyParsers.parse.json) { rs =>
